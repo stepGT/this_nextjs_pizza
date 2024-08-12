@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Container } from './container';
 import { Button } from '../ui';
+import { User } from 'lucide-react';
 
 interface Props {
   className?: string;
@@ -21,7 +22,10 @@ export const Header: React.FC<Props> = ({ className }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline">Войти</Button>
+          <Button variant="outline" className="flex items-center gap-1">
+            <User size={16} />
+            Войти
+          </Button>
         </div>
       </Container>
     </header>
