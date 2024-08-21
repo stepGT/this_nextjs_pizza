@@ -1,4 +1,4 @@
-import { Container, Filters, Title } from '@/components/shared';
+import { Container, Filters, ProductCard, Title } from '@/components/shared';
 import { TopBar } from '@/components/shared/top-bar';
 
 export default function Home() {
@@ -16,7 +16,9 @@ export default function Home() {
           </div>
 
           <div className="flex-1">
-            <div className="flex flex-col gap-16">List of products</div>
+            <div className="flex flex-col gap-16">
+              <ProductCard id={0} name='Карбонара' price={500} imageUrl='https://media.dodostatic.net/image/r:292x292/11EE7D61389AB51A8F648A0DBA5B1689.jpg' />
+            </div>
           </div>
         </div>
       </Container>
