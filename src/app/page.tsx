@@ -1,4 +1,4 @@
-import { Container, Filters, Title } from '@/components/shared';
+import { Container, Filters, ProductCard, ProductsGroupList, Title } from '@/components/shared';
 import { TopBar } from '@/components/shared/top-bar';
 
 export default function Home() {
@@ -16,7 +16,105 @@ export default function Home() {
           </div>
 
           <div className="flex-1">
-            <div className="flex flex-col gap-16">List of products</div>
+            <div className="flex flex-col gap-16">
+              <ProductsGroupList
+                title="Пиццы"
+                items={[
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Сырная',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
+                    items: [{ price: 299 }],
+                  },
+                ]}
+                categoryID={1}
+              />
+
+              <ProductsGroupList
+                title="Завтрак"
+                items={[
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                  {
+                    id: 1,
+                    name: 'Додстер с ветчиной',
+                    imageUrl:
+                      'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
+                    items: [{ price: 209 }],
+                  },
+                ]}
+                categoryID={1}
+              />
+            </div>
           </div>
         </div>
       </Container>
