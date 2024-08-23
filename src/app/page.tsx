@@ -28,35 +28,35 @@ export default function Home() {
                     items: [{ price: 299 }],
                   },
                   {
-                    id: 1,
+                    id: 2,
                     name: 'Сырная',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
                     items: [{ price: 299 }],
                   },
                   {
-                    id: 1,
+                    id: 3,
                     name: 'Сырная',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
                     items: [{ price: 299 }],
                   },
                   {
-                    id: 1,
+                    id: 4,
                     name: 'Сырная',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
                     items: [{ price: 299 }],
                   },
                   {
-                    id: 1,
+                    id: 5,
                     name: 'Сырная',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
                     items: [{ price: 299 }],
                   },
                   {
-                    id: 1,
+                    id: 6,
                     name: 'Сырная',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif',
@@ -77,42 +77,42 @@ export default function Home() {
                     items: [{ price: 209 }],
                   },
                   {
-                    id: 1,
+                    id: 2,
                     name: 'Додстер с ветчиной',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
                     items: [{ price: 209 }],
                   },
                   {
-                    id: 1,
+                    id: 3,
                     name: 'Додстер с ветчиной',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
                     items: [{ price: 209 }],
                   },
                   {
-                    id: 1,
+                    id: 4,
                     name: 'Додстер с ветчиной',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
                     items: [{ price: 209 }],
                   },
                   {
-                    id: 1,
+                    id: 5,
                     name: 'Додстер с ветчиной',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
                     items: [{ price: 209 }],
                   },
                   {
-                    id: 1,
+                    id: 6,
                     name: 'Додстер с ветчиной',
                     imageUrl:
                       'https://media.dodostatic.net/image/r:584x584/11EE7970259D888E98B6407EE6B994D9.avif',
                     items: [{ price: 209 }],
                   },
                 ]}
-                categoryID={1}
+                categoryID={2}
               />
             </div>
           </div>
