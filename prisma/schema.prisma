@@ -17,6 +17,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Cart Cart[]
 }
 
 model Product {
@@ -55,6 +57,8 @@ model Ingredient {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  CartItem CartItem[]
 }
 
 model ProductItem {
@@ -66,4 +70,39 @@ model ProductItem {
 
   product   Product @relation(fields: [productID], references: [id])
   productID Int
+
+  CartItem CartItem[]
+}
+
+model Cart {
+    id Int @id @default(autoincrement())
+
+    user   User? @relation(fields: [userID], references: [id])
+    userID Int?  @unique
+
+    items CartItem[]
+
+    token String?
+
+    totalAmount Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+    id Int @id @default(autoincrement())
+
+    cart   Cart @relation(fields: [cartID], references: [id])
+    cartID Int
+
+    productItem   ProductItem @relation(fields: [productItemID], references: [id])
+    productItemID Int
+
+    quantity Int @default(1)
+
+    ingredients Ingredient[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
