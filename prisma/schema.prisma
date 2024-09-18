@@ -12,9 +12,9 @@ model User {
   id Int @id @default(autoincrement())
 
   fullName String
-  email    String @unique
+  email    String   @unique
   password String
-  role UserRole  @default(USER)
+  role     UserRole @default(USER)
 
   provider   String?
   providerID String?
@@ -22,8 +22,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  cart Cart?
-  orders Order[]
+  cart             Cart?
+  orders           Order[]
   verificationCode VerificationCode?
 }
 
@@ -81,82 +81,82 @@ model ProductItem {
 }
 
 model Cart {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    user   User? @relation(fields: [userID], references: [id])
-    userID Int?  @unique
+  user   User? @relation(fields: [userID], references: [id])
+  userID Int?  @unique
 
-    items CartItem[]
+  items CartItem[]
 
-    token String?
+  token String?
 
-    totalAmount Int @default(0)
+  totalAmount Int @default(0)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CartItem {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    cart   Cart @relation(fields: [cartID], references: [id])
-    cartID Int
+  cart   Cart @relation(fields: [cartID], references: [id])
+  cartID Int
 
-    productItem   ProductItem @relation(fields: [productItemID], references: [id])
-    productItemID Int
+  productItem   ProductItem @relation(fields: [productItemID], references: [id])
+  productItemID Int
 
-    quantity Int @default(1)
+  quantity Int @default(1)
 
-    ingredients Ingredient[]
+  ingredients Ingredient[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    user   User? @relation(fields: [userID], references: [id])
-    userID Int?
+  user   User? @relation(fields: [userID], references: [id])
+  userID Int?
 
-    token String
+  token String
 
-    totalAmount Int
-    status      OrderStatus
-    paymentID   String?
+  totalAmount Int
+  status      OrderStatus
+  paymentID   String?
 
-    items Json
+  items Json
 
-    fullName String
-    email    String
-    phone    String
-    address  String
-    comment  String?
+  fullName String
+  email    String
+  phone    String
+  address  String
+  comment  String?
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationCode {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    user   User @relation(fields: [userID], references: [id])
-    userID Int  @unique
+  user   User @relation(fields: [userID], references: [id])
+  userID Int  @unique
 
-    code String
+  code String
 
-    createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
-    @@unique([userID, code])
+  @@unique([userID, code])
 }
 
 enum OrderStatus {
-    PENDING
-    SUCCEEDED
-    CANCELLED
+  PENDING
+  SUCCEEDED
+  CANCELLED
 }
 
 enum UserRole {
-    USER
-    ADMIN
+  USER
+  ADMIN
 }
