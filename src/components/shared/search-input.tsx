@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef, FC, Fragment } from 'react';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useClickAway, useDebounce } from 'react-use';
@@ -12,9 +12,9 @@ interface Props {
   className?: string;
 }
 
-export const SearchInput: React.FC<Props> = ({ className }) => {
+export const SearchInput: FC<Props> = ({ className }) => {
   const [focused, setFocused] = useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const ref = useRef(null);
 
@@ -37,7 +37,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
   );
 
   return (
-    <>
+    <Fragment>
       {focused && <div className="fixed top-0 left-0 bottom-0 right-0 bg-black/50 z-30" />}
 
       <div
@@ -72,6 +72,6 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
           </div>
         )}
       </div>
-    </>
+    </Fragment>
   );
 };
