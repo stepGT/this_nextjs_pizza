@@ -29,8 +29,13 @@ export const SearchInput: FC<Props> = ({ className }) => {
   };
 
   useDebounce(
-    () => {
-      API.products.search(searchQuery).then((data) => setProducts(data));
+    async () => {
+      try {
+        const response = await API.products.search(searchQuery);
+        setProducts(response);
+      } catch (error) {
+        console.log(error);
+      }
     },
     250,
     [searchQuery],
