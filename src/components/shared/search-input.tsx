@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, FC, Fragment } from 'react';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useClickAway } from 'react-use';
+import { useClickAway, useDebounce } from 'react-use';
 import { Product } from '@prisma/client';
 import Link from 'next/link';
 import { API } from '@/services/api-client';
@@ -12,9 +12,9 @@ interface Props {
   className?: string;
 }
 
-export const SearchInput: React.FC<Props> = ({ className }) => {
+export const SearchInput: FC<Props> = ({ className }) => {
   const [focused, setFocused] = useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const ref = useRef(null);
 
@@ -22,12 +22,27 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     setFocused(false);
   });
 
-  useEffect(() => {
-    API.products.search(searchQuery).then((data) => setProducts(data));
-  }, [searchQuery]);
+  const onClickItem = () => {
+    setFocused(false);
+    setSearchQuery('');
+    setProducts([]);
+  };
+
+  useDebounce(
+    async () => {
+      try {
+        const response = await API.products.search(searchQuery);
+        setProducts(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    250,
+    [searchQuery],
+  );
 
   return (
-    <>
+    <Fragment>
       {focused && <div className="fixed top-0 left-0 bottom-0 right-0 bg-black/50 z-30" />}
 
       <div
@@ -51,7 +66,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
             )}>
             {products.map((product) => (
               <Link
-                onClick={() => {}}
+                onClick={onClickItem}
                 key={product.id}
                 className="flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10"
                 href={`/product/${product.id}`}>
@@ -62,6 +77,6 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
           </div>
         )}
       </div>
-    </>
+    </Fragment>
   );
 };
