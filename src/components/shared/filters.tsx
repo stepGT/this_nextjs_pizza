@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Title } from './title';
 import { FilterCheckbox } from './filter-checkbox';
 import { Input } from '../ui';
@@ -8,6 +8,7 @@ import { RangeSlider } from './range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 import { useSet } from 'react-use';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   className?: string;
@@ -23,6 +24,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading, onAddID, selectedIDs } = useFilterIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
+  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices({
@@ -34,6 +36,18 @@ export const Filters: React.FC<Props> = ({ className }) => {
   return (
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
+
+      <CheckboxFiltersGroup
+        title="Тип теста"
+        name="pizzaTypes"
+        className="mb-5"
+        onClickCheckbox={togglePizzaTypes}
+        selected={pizzaTypes}
+        items={[
+          { text: 'Тонкое', value: '1' },
+          { text: 'Традиционное', value: '2' },
+        ]}
+      />
 
       <CheckboxFiltersGroup
         title="Размеры"
