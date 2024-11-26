@@ -1,24 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Title } from './title';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 import { useSet } from 'react-use';
+import qs from 'qs';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   className?: string;
 }
 
 interface PriceProps {
-  priceFrom: number;
-  priceTo: number;
+  priceFrom?: number;
+  priceTo?: number;
 }
 
-export const Filters: React.FC<Props> = ({ className }) => {
-  const [prices, setPrices] = useState<PriceProps>({ priceFrom: 0, priceTo: 1000 });
+export const Filters: FC<Props> = ({ className }) => {
+  const router = useRouter();
+  const [prices, setPrices] = useState<PriceProps>({});
   const { ingredients, loading, onAddID, selectedIDs } = useFilterIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
@@ -30,6 +33,17 @@ export const Filters: React.FC<Props> = ({ className }) => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    const filters = {
+      ...prices,
+      pizzaTypes: Array.from(pizzaTypes),
+      sizes: Array.from(sizes),
+      ingredients: Array.from(selectedIDs),
+    };
+    const query = qs.stringify(filters, { arrayFormat: 'comma' });
+    router.push(`/?${query}`, { scroll: false });
+  }, [prices, pizzaTypes, sizes, selectedIDs]);
 
   return (
     <div className={className}>
@@ -86,7 +100,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
           min={0}
           max={1000}
           step={10}
-          value={[prices.priceFrom, prices.priceTo]}
+          value={[prices.priceFrom || 0, prices.priceTo || 1000]}
         />
       </div>
 
