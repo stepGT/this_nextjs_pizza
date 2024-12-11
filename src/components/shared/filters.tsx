@@ -8,7 +8,7 @@ import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 import { useSet } from 'react-use';
 import qs from 'qs';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
   className?: string;
@@ -19,13 +19,25 @@ interface PriceProps {
   priceTo?: number;
 }
 
+interface QueryFilters extends PriceProps {
+  pizzaTypes: string;
+  sizes: string;
+  ingredients: string;
+}
+
 export const Filters: FC<Props> = ({ className }) => {
+  const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>;
   const router = useRouter();
-  const [prices, setPrices] = useState<PriceProps>({});
+  const [prices, setPrices] = useState<PriceProps>({
+    priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+    priceTo: Number(searchParams.get('priceTo')) || undefined,
+  });
   const { ingredients, loading, onAddID, selectedIDs } = useFilterIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
-  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
-  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
+  const [sizes, { toggle: toggleSizes }] = useSet(
+    new Set<string>(searchParams.has('sizes') ? searchParams.get('sizes')?.split(',') : []),
+  );
+  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices({
