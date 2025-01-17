@@ -32,7 +32,9 @@ export const Filters: FC<Props> = ({ className }) => {
     priceFrom: Number(searchParams.get('priceFrom')) || undefined,
     priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
-  const { ingredients, loading, onAddID, selectedIDs } = useFilterIngredients();
+  const { ingredients, loading, onAddID, selectedIDs } = useFilterIngredients(
+    searchParams.get('ingredients')?.split(',')
+  );
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
   const [sizes, { toggle: toggleSizes }] = useSet(
     new Set<string>(searchParams.has('sizes') ? searchParams.get('sizes')?.split(',') : []),
