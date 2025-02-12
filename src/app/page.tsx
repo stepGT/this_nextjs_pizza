@@ -1,6 +1,7 @@
 import { Container, Filters, ProductsGroupList, Title } from '@/components/shared';
 import { TopBar } from '@/components/shared/top-bar';
 import { prisma } from '../../prisma/prisma-client';
+import { ingredients } from '../../prisma/constants';
 
 export default async function Home() {
   const categories = await prisma.category.findMany({
@@ -13,13 +14,13 @@ export default async function Home() {
       },
     },
   });
-  console.log(categories);
+
   return (
     <>
       <Container className="mt-10">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
-      <TopBar />
+      <TopBar categories={categories} />
 
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
