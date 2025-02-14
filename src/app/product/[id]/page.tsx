@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '../../../../prisma/prisma-client';
-import { Container, ProductImage, Title } from '@/components/shared';
+import { Container, ProductImage, Title, GroupVariants } from '@/components/shared';
 
 export default async function ProductPage({ params: { id } }: { params: { id: string } }) {
   const product = await prisma.product.findFirst({
@@ -33,6 +33,23 @@ export default async function ProductPage({ params: { id } }: { params: { id: st
             accusamus quae nihil eaque sunt optio. Eos, rem! Ipsam sequi aliquam aspernatur ad
             tempora similique beatae voluptatum cum.
           </p>
+          <GroupVariants
+            value="2"
+            items={[
+              {
+                name: 'Маленькая',
+                value: '1',
+              },
+              {
+                name: 'Средняя',
+                value: '2',
+              },
+              {
+                name: 'Большая',
+                value: '3',
+              },
+            ]}
+          />
         </div>
       </div>
     </Container>
