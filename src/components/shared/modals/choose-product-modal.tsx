@@ -4,7 +4,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { Product } from '@prisma/client';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ChooseProductForm } from '../choose-product-form';
 
 interface Props {
   product: Product;
@@ -21,7 +22,12 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           'p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden',
           className,
         )}>
-        <DialogTitle>{product.name}</DialogTitle>
+        <ChooseProductForm
+          imageUrl={product.imageUrl}
+          name={product.name}
+          ingredients={[]}
+          items={[]}
+        />
       </DialogContent>
     </Dialog>
   );
