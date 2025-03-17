@@ -3,7 +3,6 @@
 import React from 'react';
 import { Ingredient, ProductItem } from '@prisma/client';
 import { cn } from '@/lib/utils';
-import { ProductImage } from './product-image';
 import { Title } from './title';
 import { Button } from '../ui';
 
