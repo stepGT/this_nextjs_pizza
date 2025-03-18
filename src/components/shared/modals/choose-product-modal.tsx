@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ChooseProductForm } from '../choose-product-form';
 import { ProductWithRelations } from '@/@types/prisma';
+import { ChoosePizzaForm } from '../choose-pizza-form';
 
 interface Props {
   product: ProductWithRelations;
@@ -24,7 +25,13 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           className,
         )}>
         {isPizzaForm ? (
-          'PizzaForm'
+          <ChoosePizzaForm
+            imageUrl={product.imageUrl}
+            name={product.name}
+            ingredients={[]}
+            items={[]}
+            onSubmit={() => {}}
+          />
         ) : (
           <ChooseProductForm
             imageUrl={product.imageUrl}
