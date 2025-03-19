@@ -9,7 +9,6 @@ import { Button } from '../ui';
 interface Props {
   imageUrl: string;
   name: string;
-  ingredients: Ingredient[];
   items: ProductItem[];
   loading?: boolean;
   onClickAdd?: VoidFunction;
@@ -20,7 +19,6 @@ export const ChooseProductForm: React.FC<Props> = ({
   name,
   items,
   imageUrl,
-  ingredients,
   onClickAdd,
   className,
 }) => {
