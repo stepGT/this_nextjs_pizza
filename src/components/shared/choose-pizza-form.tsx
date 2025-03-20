@@ -5,11 +5,13 @@ import { Title } from './title';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
 import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/constants/pizza';
+import { Ingredient } from '@prisma/client';
+import { IngredientItem } from './ingredient-item';
 
 interface Props {
   imageUrl: string;
   name: string;
-  ingredients: any[];
+  ingredients: Ingredient[];
   items?: any[];
   onSubmit: (itemID: number, ingredients: number[]) => void;
   className?: string;
@@ -48,6 +50,21 @@ export const ChoosePizzaForm: FC<Props> = ({
             value={String(type)}
             onClick={(value) => setType(Number(value) as PizzaType)}
           />
+        </div>
+
+        <div className="bg-gray-50 p-5 rounded-md h-[420px] overflow-auto scrollbar mt-5">
+          <div className="grid grid-cols-3 gap-3">
+            {ingredients.map((i) => (
+              <IngredientItem
+                key={i.id}
+                name={i.name}
+                price={i.price}
+                imageUrl={i.imageUrl}
+                onClick={() => i.id}
+                active={true}
+              />
+            ))}
+          </div>
         </div>
 
         <Button
