@@ -7,6 +7,7 @@ import { GroupVariants } from './group-variants';
 import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/constants/pizza';
 import { Ingredient } from '@prisma/client';
 import { IngredientItem } from './ingredient-item';
+import { useSet } from 'react-use';
 
 interface Props {
   imageUrl: string;
@@ -29,6 +30,7 @@ export const ChoosePizzaForm: FC<Props> = ({
 }) => {
   const [size, setSize] = useState<PizzaSize>(20);
   const [type, setType] = useState<PizzaType>(1);
+  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]))
   return (
     <div className={cn(className, 'flex flex-1')}>
       <PizzaImage imageUrl={imageUrl} size={size} />
@@ -60,8 +62,8 @@ export const ChoosePizzaForm: FC<Props> = ({
                 name={i.name}
                 price={i.price}
                 imageUrl={i.imageUrl}
-                onClick={() => i.id}
-                active={true}
+                onClick={() => addIngredient(i.id)}
+                active={selectedIngredients.has(i.id)}
               />
             ))}
           </div>
