@@ -5,7 +5,7 @@ import { Title } from './title';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
 import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/constants/pizza';
-import { Ingredient } from '@prisma/client';
+import { Ingredient, ProductItem } from '@prisma/client';
 import { IngredientItem } from './ingredient-item';
 import { useSet } from 'react-use';
 
@@ -13,8 +13,8 @@ interface Props {
   imageUrl: string;
   name: string;
   ingredients: Ingredient[];
-  items?: any[];
-  onSubmit: (itemID: number, ingredients: number[]) => void;
+  items: ProductItem[];
+  onClickAddCard: (itemID: number, ingredients: number[]) => void;
   className?: string;
 }
 
@@ -25,12 +25,14 @@ export const ChoosePizzaForm: FC<Props> = ({
   name,
   imageUrl,
   ingredients,
-  onSubmit,
+  items,
+  onClickAddCard,
   className,
 }) => {
   const [size, setSize] = useState<PizzaSize>(20);
   const [type, setType] = useState<PizzaType>(1);
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]))
+  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
+  const pizzaPrice = items.find(i => i.pizzaType === type && i.size === size)?.price;
   return (
     <div className={cn(className, 'flex flex-1')}>
       <PizzaImage imageUrl={imageUrl} size={size} />
@@ -72,7 +74,7 @@ export const ChoosePizzaForm: FC<Props> = ({
         <Button
           onSubmit={() => {}}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-          Добавить в корзину за {350} ₽
+          Добавить в корзину за {pizzaPrice} ₽
         </Button>
       </div>
     </div>
