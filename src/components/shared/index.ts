@@ -1,4 +1,4 @@
-export { ProductImage } from './product-image';
+export { PizzaImage } from './pizza-image';
 export { Container } from './container';
 export { Header } from './header';
 export { Title } from './title';
@@ -11,3 +11,6 @@ export { ProductCard } from './product-card';
 export { ProductsGroupList } from './products-group-list';
 export { SearchInput } from './search-input';
 export { GroupVariants } from './group-variants';
+export { ChooseProductForm } from './choose-product-form';
+export { IngredientItem } from './ingredient-item';
+export * from './modals';
