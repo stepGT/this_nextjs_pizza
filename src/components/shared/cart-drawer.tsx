@@ -14,6 +14,8 @@ import {
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/lib';
 
 interface Props {
   className?: string;
@@ -30,6 +32,21 @@ export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }
             В корзине <span className="font-bold">3 товара</span>
           </SheetTitle>
         </SheetHeader>
+
+        <div className="-mx-6 mt-5 overflow-auto flex-1">
+          <div className="mb-2">
+            <CartDrawerItem
+              id={1}
+              imageUrl={
+                'https://cdn.dodostatic.net/static/Img/Ingredients/99f5cb91225b4875bd06a26d2e842106.png'
+              }
+              details={getCartItemDetails([{ name: 'Сыр' }, { name: 'Плесень' }], 2, 2, )}
+              name={'Чорризо Фреш'}
+              price={500}
+              quantity={1}
+            />
+          </div>
+        </div>
 
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">
