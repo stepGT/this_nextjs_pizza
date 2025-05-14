@@ -1,4 +1,3 @@
-import { AnyCnameRecord } from 'node:dns';
 import { PizzaSize, PizzaType, mapPizzaType } from '../constants/pizza';
 
 export const getCartItemDetails = (
