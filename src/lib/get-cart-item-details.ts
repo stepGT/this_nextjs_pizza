@@ -2,7 +2,7 @@ import { AnyCnameRecord } from 'node:dns';
 import { PizzaSize, PizzaType, mapPizzaType } from '../constants/pizza';
 
 export const getCartItemDetails = (
-  ingredients: [],
+  ingredients: any[],
   pizzaType?: PizzaType,
   pizzaSize?: PizzaSize,
 ): string => {
@@ -12,8 +12,6 @@ export const getCartItemDetails = (
     const typeName = mapPizzaType[pizzaType];
     details.push(`${typeName} ${pizzaSize} см`);
   }
-
-  console.log(ingredients)
 
   if (ingredients) {
     details.push(...ingredients.map((ingredient) => ingredient.name));
