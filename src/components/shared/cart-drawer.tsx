@@ -18,18 +18,24 @@ import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/lib';
 import { useCartStore } from '../../../store';
 import { PizzaSize, PizzaType } from '@/constants/pizza';
+import { updateItemQuantity } from '@/services/cart';
 
 interface Props {
   className?: string;
 }
 
 export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }) => {
-  const { totalAmount, items, fetchCartItems } = useCartStore();
+  const { totalAmount, items, fetchCartItems, updateItemQuantity } = useCartStore();
 
   useEffect(() => {
     fetchCartItems();
   }, []);
-  
+
+  const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -37,7 +43,7 @@ export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold">{ items.length } товара</span>
+            В корзине <span className="font-bold">{items.length} товара</span>
           </SheetTitle>
         </SheetHeader>
 
@@ -55,6 +61,7 @@ export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }
                 name={item.name}
                 price={item.price}
                 quantity={item.quantity}
+                onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
               />
             </div>
           ))}
