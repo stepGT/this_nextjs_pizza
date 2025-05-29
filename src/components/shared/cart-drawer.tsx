@@ -18,7 +18,6 @@ import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/lib';
 import { useCartStore } from '../../../store';
 import { PizzaSize, PizzaType } from '@/constants/pizza';
-import { updateItemQuantity } from '@/services/cart';
 
 interface Props {
   className?: string;
@@ -54,7 +53,7 @@ export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }
                 id={item.id}
                 imageUrl={item.imageUrl}
                 details={getCartItemDetails(
-                  item.ingredients,
+                  item.ingredients as any,
                   item.pizzaType as PizzaType,
                   item.pizzaSizes as PizzaSize,
                 )}
