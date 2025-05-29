@@ -10,9 +10,10 @@ export interface CartState {
   items: CartStateItem[];
   fetchCartItems: () => Promise<void>;
   updateItemQuantity: (id: number, quantity: number) => Promise<void>;
+  removeCartItem: (id: number) => Promise<void>;
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set) => ({
   items: [],
   error: false,
   loading: true,
@@ -40,6 +41,25 @@ export const useCartStore = create<CartState>((set, get) => ({
       set({ error: true });
     } finally {
       set({ loading: false });
+    }
+  },
+  removeCartItem: async (id: number) => {
+    try {
+      set((state) => ({
+        loading: true,
+        error: false,
+        items: state.items.map((item) => (item.id === id ? { ...item, disabled: true } : item)),
+      }));
+      const data = await API.cart.removeCartItem(id);
+      set(getCartDetails(data));
+    } catch (error) {
+      console.error(error);
+      set({ error: true });
+    } finally {
+      set((state) => ({
+        loading: false,
+        items: state.items.map((item) => ({ ...item, disabled: false })),
+      }));
     }
   },
 }));
