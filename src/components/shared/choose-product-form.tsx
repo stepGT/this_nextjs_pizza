@@ -11,7 +11,7 @@ interface Props {
   name: string;
   items: ProductItem[];
   loading?: boolean;
-  onClickAdd?: VoidFunction;
+  onSubmit?: VoidFunction;
   className?: string;
 }
 
@@ -19,7 +19,7 @@ export const ChooseProductForm: React.FC<Props> = ({
   name,
   items,
   imageUrl,
-  onClickAdd,
+  onSubmit,
   className,
 }) => {
   const textDetaills = `30 см, традиционное тесто 30`;
@@ -39,7 +39,9 @@ export const ChooseProductForm: React.FC<Props> = ({
 
         <p className="text-gray-400">{textDetaills}</p>
 
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+        <Button
+          onClick={onSubmit}
+          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
           Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>

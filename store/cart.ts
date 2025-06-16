@@ -11,6 +11,7 @@ export interface CartState {
   items: CartStateItem[];
   fetchCartItems: () => Promise<void>;
   updateItemQuantity: (id: number, quantity: number) => Promise<void>;
+  addCartItem: (values: CreateCartItemValues) => Promise<void>;
   removeCartItem: (id: number) => Promise<void>;
 }
 
