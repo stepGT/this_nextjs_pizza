@@ -21,25 +21,15 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const isPizzaForm = Boolean(firstItem.pizzaType);
   const [addCartItem, loading] = useCartStore((state) => [state.addCartItem, state.loading]);
 
-  const onAddProduct = async () => {
+  const onSubmit = async (productItemID?: number, ingredients?: number[]) => {
     try {
+      const itemID = productItemID ?? firstItem.id;
+      //
       await addCartItem({
-        productItemID: firstItem.id,
-      });
-      toast.success('Successka!!');
-    } catch (e) {
-      console.log(e);
-      toast.error('Errorka!!');
-    }
-  };
-
-  const onAddPizza = async (productItemID: number, ingredients: number[]) => {
-    try {
-      await addCartItem({
-        productItemID,
+        productItemID: itemID,
         ingredients,
       });
-      toast.success('Successka!!');
+      toast.success(`${product.name} add to cart`);
       router.back();
     } catch (e) {
       console.log(e);
@@ -60,12 +50,12 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             name={product.name}
             ingredients={product.ingredients}
             items={product.items}
-            onSubmit={onAddPizza}
+            onSubmit={onSubmit}
             loading={loading}
           />
         ) : (
           <ChooseProductForm
-            onSubmit={onAddProduct}
+            onSubmit={onSubmit}
             imageUrl={product.imageUrl}
             name={product.name}
             items={[]}
