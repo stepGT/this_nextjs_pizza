@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -8,6 +8,7 @@ import { ChooseProductForm } from '../choose-product-form';
 import { ProductWithRelations } from '@/@types/prisma';
 import { ChoosePizzaForm } from '../choose-pizza-form';
 import { useCartStore } from '../../../../store';
+import toast from 'react-hot-toast';
 
 interface Props {
   product: ProductWithRelations;
@@ -18,19 +19,32 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter();
   const firstItem = product.items[0];
   const isPizzaForm = Boolean(firstItem.pizzaType);
-  const addCartItem = useCartStore((state) => state.addCartItem);
+  const [addCartItem, loading] = useCartStore((state) => [state.addCartItem, state.loading]);
 
-  const onAddProduct = () => {
-    addCartItem({
-      productItemID: firstItem.id,
-    });
+  const onAddProduct = async () => {
+    try {
+      await addCartItem({
+        productItemID: firstItem.id,
+      });
+      toast.success('Successka!!');
+    } catch (e) {
+      console.log(e);
+      toast.error('Errorka!!');
+    }
   };
 
-  const onAddPizza = (productItemID: number, ingredients: number[]) => {
-    addCartItem({
-      productItemID,
-      ingredients,
-    });
+  const onAddPizza = async (productItemID: number, ingredients: number[]) => {
+    try {
+      await addCartItem({
+        productItemID,
+        ingredients,
+      });
+      toast.success('Successka!!');
+      router.back();
+    } catch (e) {
+      console.log(e);
+      toast.error('Errorka!!');
+    }
   };
 
   return (
@@ -47,6 +61,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             ingredients={product.ingredients}
             items={product.items}
             onSubmit={onAddPizza}
+            loading={loading}
           />
         ) : (
           <ChooseProductForm
@@ -55,6 +70,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             name={product.name}
             items={[]}
             price={firstItem.price}
+            loading={loading}
           />
         )}
       </DialogContent>
