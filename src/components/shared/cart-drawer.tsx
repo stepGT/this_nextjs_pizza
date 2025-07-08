@@ -57,6 +57,7 @@ export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }
                   item.pizzaType as PizzaType,
                   item.pizzaSizes as PizzaSize,
                 )}
+                disabled={item.disabled}
                 name={item.name}
                 price={item.price}
                 quantity={item.quantity}
