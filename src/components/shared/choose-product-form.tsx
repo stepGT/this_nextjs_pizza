@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { Ingredient, ProductItem } from '@prisma/client';
+import { FC } from 'react';
 import { cn } from '@/lib/utils';
 import { Title } from './title';
 import { Button } from '../ui';
@@ -10,13 +9,12 @@ interface Props {
   imageUrl: string;
   name: string;
   price: number;
-  items: ProductItem[];
   loading?: boolean;
   onSubmit?: VoidFunction;
   className?: string;
 }
 
-export const ChooseProductForm: React.FC<Props> = ({
+export const ChooseProductForm: FC<Props> = ({
   name,
   price,
   imageUrl,
