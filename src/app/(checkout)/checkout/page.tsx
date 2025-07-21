@@ -1,6 +1,6 @@
 import { CheckoutItemDetails, Container, Title, WhiteBlock } from '@/components/shared';
-import { Input, Textarea } from '@/components/ui';
-import { Package, Percent, Truck } from 'lucide-react';
+import { Button, Input, Textarea } from '@/components/ui';
+import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
   return (
@@ -61,6 +61,10 @@ export default function CheckoutPage() {
               }
               value="3506 ₽"
             />
+            <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+              Pay
+              <ArrowRight className="w-5 ml-2" />
+            </Button>
           </WhiteBlock>
         </div>
       </div>
