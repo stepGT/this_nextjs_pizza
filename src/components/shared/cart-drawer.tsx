@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, PropsWithChildren, useEffect } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import Image from 'next/image';
 import {
   Sheet,
@@ -21,11 +21,7 @@ import { Title } from './title';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/hooks';
 
-interface Props {
-  className?: string;
-}
-
-export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }) => {
+export const CartDrawer: FC<PropsWithChildren> = ({ children }) => {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
 
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
