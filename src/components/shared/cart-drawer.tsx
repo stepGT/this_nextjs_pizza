@@ -16,21 +16,17 @@ import { Button } from '../ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/lib';
-import { useCartStore } from '../../../store';
 import { PizzaSize, PizzaType } from '@/constants/pizza';
 import { Title } from './title';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/hooks';
 
 interface Props {
   className?: string;
 }
 
 export const CartDrawer: FC<PropsWithChildren<Props>> = ({ className, children }) => {
-  const { totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem } = useCartStore();
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
 
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
