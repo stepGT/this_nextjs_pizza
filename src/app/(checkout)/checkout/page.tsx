@@ -14,12 +14,17 @@ import { useCart } from '@/hooks';
 import { getCartItemDetails } from '@/lib';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 
+const VAT = 15;
+const DELIVERY_PRICE = 250;
+
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
     updateItemQuantity(id, newQuantity);
   };
+  const vatPrice = (totalAmount * VAT) / 100;
+  const totalPrice = totalAmount + DELIVERY_PRICE + vatPrice;
   return (
     <Container className="mt-10">
       <Title text="Оформление заказа" className="font-extrabold mb-8 text-[36px]" />
@@ -73,7 +78,7 @@ export default function CheckoutPage() {
           <WhiteBlock className="p-6 sticky top-4">
             <div className="flex flex-col gap-1">
               <span className="text-xl">Total</span>
-              <span className="text-[34px] font-extrabold">{totalAmount} ₽</span>
+              <span className="text-[34px] font-extrabold">{totalPrice} ₽</span>
             </div>
 
             <CheckoutItemDetails
@@ -83,7 +88,7 @@ export default function CheckoutPage() {
                   Cost of product
                 </div>
               }
-              value="3506 ₽"
+              value={`${totalAmount} ₽`}
             />
             <CheckoutItemDetails
               title={
@@ -92,7 +97,7 @@ export default function CheckoutPage() {
                   Taxes
                 </div>
               }
-              value="3506 ₽"
+              value={`${vatPrice} ₽`}
             />
             <CheckoutItemDetails
               title={
@@ -101,7 +106,7 @@ export default function CheckoutPage() {
                   Delivery
                 </div>
               }
-              value="3506 ₽"
+              value={`${DELIVERY_PRICE} ₽`}
             />
             <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
               Pay
