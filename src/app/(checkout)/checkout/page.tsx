@@ -8,6 +8,7 @@ import {
   WhiteBlock,
 } from '@/components/shared';
 import { CheckoutSidebar } from '@/components/shared';
+import { FormInput } from '@/components/shared/form';
 import { Input, Textarea } from '@/components/ui';
 import { PizzaSize, PizzaType } from '@/constants/pizza';
 import { useCart } from '@/hooks';
@@ -56,7 +57,7 @@ export default function CheckoutPage() {
               <Input name="firstName" className="text-base" placeholder="Name" />
               <Input name="lastName" className="text-base" placeholder="Lastname" />
               <Input name="email" className="text-base" placeholder="E-Mail" />
-              <Input name="phone" className="text-base" placeholder="Phone" />
+              <FormInput name="phone" className="text-base" placeholder="Phone" />
             </div>
           </WhiteBlock>
 
