@@ -1,18 +1,11 @@
 'use client';
 
-import {
-  CheckoutItem,
-  CheckoutItemSkeleton,
-  Container,
-  Title,
-  WhiteBlock,
-} from '@/components/shared';
+import { Container, Title, WhiteBlock } from '@/components/shared';
 import { CheckoutSidebar } from '@/components/shared';
-import { FormInput } from '@/components/shared/form';
 import { Input, Textarea } from '@/components/ui';
-import { PizzaSize, PizzaType } from '@/constants/pizza';
 import { useCart } from '@/hooks';
-import { getCartItemDetails } from '@/lib';
+import { CheckoutCart } from '@/components/shared/checkout';
+import { CheckoutPersonalForm } from '@/components/shared/checkout/checkout-personal-form';
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
@@ -25,41 +18,14 @@ export default function CheckoutPage() {
       <Title text="Оформление заказа" className="font-extrabold mb-8 text-[36px]" />
       <div className="flex gap-10">
         <div className="flex flex-col gap-10 flex-1 mb-20">
-          <WhiteBlock title="1. Cart">
-            <div className="flex flex-col gap-5">
-              {loading
-                ? [...Array(4)].map((_, index) => <CheckoutItemSkeleton key={index} />)
-                : items.map((item) => (
-                    <CheckoutItem
-                      key={item.id}
-                      id={item.id}
-                      imageUrl={item.imageUrl}
-                      details={getCartItemDetails(
-                        item.ingredients,
-                        item.pizzaType as PizzaType,
-                        item.pizzaSize as PizzaSize,
-                      )}
-                      name={item.name}
-                      price={item.price}
-                      quantity={item.quantity}
-                      disabled={item.disabled}
-                      onClickCountButton={(type) =>
-                        onClickCountButton(item.id, item.quantity, type)
-                      }
-                      onClickRemove={() => removeCartItem(item.id)}
-                    />
-                  ))}
-            </div>
-          </WhiteBlock>
+          <CheckoutCart
+            onClickCountButton={onClickCountButton}
+            removeCartItem={removeCartItem}
+            items={items}
+            loading={loading}
+          />
 
-          <WhiteBlock title="2. Personal data">
-            <div className="grid grid-cols-2 gap-5">
-              <Input name="firstName" className="text-base" placeholder="Name" />
-              <Input name="lastName" className="text-base" placeholder="Lastname" />
-              <Input name="email" className="text-base" placeholder="E-Mail" />
-              <FormInput name="phone" className="text-base" placeholder="Phone" />
-            </div>
-          </WhiteBlock>
+          <CheckoutPersonalForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
 
           <WhiteBlock title="3. Delivery address">
             <div className="grid grid-col gap-5">
