@@ -1,10 +1,9 @@
 'use client';
 
-import { Container, Title, WhiteBlock } from '@/components/shared';
+import { Container, Title } from '@/components/shared';
 import { CheckoutSidebar } from '@/components/shared';
-import { Input, Textarea } from '@/components/ui';
 import { useCart } from '@/hooks';
-import { CheckoutCart } from '@/components/shared/checkout';
+import { CheckoutAddressForm, CheckoutCart } from '@/components/shared/checkout';
 import { CheckoutPersonalForm } from '@/components/shared/checkout/checkout-personal-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -48,12 +47,7 @@ export default function CheckoutPage() {
 
               <CheckoutPersonalForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
 
-              <WhiteBlock title="3. Delivery address">
-                <div className="grid grid-col gap-5">
-                  <Input name="address" className="text-base" placeholder="Address" />
-                  <Textarea placeholder="Comment" className="text-base" rows={5} />
-                </div>
-              </WhiteBlock>
+              <CheckoutAddressForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
             </div>
 
             <div className="w-[450px]">
