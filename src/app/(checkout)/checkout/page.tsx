@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Container, Title } from '@/components/shared';
 import { CheckoutSidebar } from '@/components/shared';
 import { useCart } from '@/hooks';
@@ -8,8 +9,11 @@ import { CheckoutPersonalForm } from '@/components/shared/checkout/checkout-pers
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkoutFormSchema, CheckoutFormValues } from '@/constants';
+import { createOrder } from '@/app/actions';
+import toast from 'react-hot-toast';
 
 export default function CheckoutPage() {
+  const [submitting, setSubmitting] = useState(false);
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -27,9 +31,25 @@ export default function CheckoutPage() {
     updateItemQuantity(id, newQuantity);
   };
   const onSubmit = async (data: CheckoutFormValues) => {
-    console.log(data)
     try {
-    } catch (err) {}
+      setSubmitting(true);
+
+      const url = await createOrder(data);
+
+      toast.error('Заказ успешно оформлен! 📝 Переход на оплату... ', {
+        icon: '✅',
+      });
+
+      if (url) {
+        location.href = url;
+      }
+    } catch (err) {
+      console.log(err);
+      setSubmitting(false);
+      toast.error('Не удалось создать заказ', {
+        icon: '❌',
+      });
+    }
   };
   return (
     <Container className="mt-10">
