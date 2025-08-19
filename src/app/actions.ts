@@ -4,6 +4,8 @@ import { CheckoutFormValues } from '@/constants';
 import { prisma } from '../../prisma/prisma-client';
 import { OrderStatus } from '@prisma/client';
 import { cookies } from 'next/headers';
+import { sendEmail } from '@/lib';
+import { PayOrderTemplate } from '@/components/shared/email-temapltes/pay-order';
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -41,7 +43,7 @@ export async function createOrder(data: CheckoutFormValues) {
       throw new Error('Cart is empty');
     }
 
-    await prisma.order.create({
+    const order = await prisma.order.create({
       data: {
         token: cartToken,
         totalAmount: userCart.totalAmount,
@@ -69,6 +71,18 @@ export async function createOrder(data: CheckoutFormValues) {
         cartID: userCart.id,
       },
     });
-    return 'qwerty';
+
+    const paymentUrl = 'http://paymentUrl.ru';
+
+    await sendEmail(
+      data.email,
+      'Next Pizza / Оплатите заказ #' + order.id,
+      PayOrderTemplate({
+        orderID: order.id,
+        totalAmount: order.totalAmount,
+        paymentUrl,
+      }),
+    );
+    return paymentUrl;
   } catch (error) {}
 }
