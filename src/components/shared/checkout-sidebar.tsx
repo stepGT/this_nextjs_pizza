@@ -36,7 +36,7 @@ export const CheckoutSidebar: FC<Props> = ({ totalAmount, loading, className }) 
             Cost of product
           </div>
         }
-        value={`${totalAmount} ₽`}
+        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${totalAmount} ₽`}
       />
 
       <CheckoutItemDetails
@@ -46,7 +46,7 @@ export const CheckoutSidebar: FC<Props> = ({ totalAmount, loading, className }) 
             Taxes
           </div>
         }
-        value={`${vatPrice} ₽`}
+        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${vatPrice} ₽`}
       />
 
       <CheckoutItemDetails
@@ -56,10 +56,10 @@ export const CheckoutSidebar: FC<Props> = ({ totalAmount, loading, className }) 
             Delivery
           </div>
         }
-        value={`${DELIVERY_PRICE} ₽`}
+        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} ₽`}
       />
 
-      <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+      <Button loading={loading} type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
         Pay
         <ArrowRight className="w-5 ml-2" />
       </Button>
