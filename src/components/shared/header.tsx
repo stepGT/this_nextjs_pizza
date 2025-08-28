@@ -1,7 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import React from 'react';
 import Image from 'next/image';
 import { Container } from './container';
 import { SearchInput } from './search-input';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { CartButton } from './cart-button';
 import { ProfileButton } from './profile-button';
 import { signIn } from 'next-auth/react';
+import { AuthModal } from './modals/auth-modal';
 
 interface Props {
   hasSearch?: boolean;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   return (
     <header className={cn('border-b', className)}>
       <Container className="flex items-center justify-between py-8">
@@ -37,14 +39,8 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
         )}
 
         <div className="flex items-center gap-3">
-          <ProfileButton
-            onClickSignIn={() => {
-              signIn('github', {
-                callbackUrl: '/',
-                redirect: true,
-              });
-            }}
-          />
+          <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
+          <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
           {hasCart && <CartButton />}
         </div>
       </Container>
