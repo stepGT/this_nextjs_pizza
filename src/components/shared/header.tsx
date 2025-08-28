@@ -1,12 +1,14 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React from 'react';
 import Image from 'next/image';
 import { Container } from './container';
-import { Button } from '../ui';
-import { User } from 'lucide-react';
 import { SearchInput } from './search-input';
 import Link from 'next/link';
 import { CartButton } from './cart-button';
+import { ProfileButton } from './profile-button';
+import { signIn } from 'next-auth/react';
 
 interface Props {
   hasSearch?: boolean;
@@ -35,11 +37,14 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
         )}
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-1">
-            <User size={16} />
-            Войти
-          </Button>
-
+          <ProfileButton
+            onClickSignIn={() => {
+              signIn('github', {
+                callbackUrl: '/',
+                redirect: true,
+              });
+            }}
+          />
           {hasCart && <CartButton />}
         </div>
       </Container>
