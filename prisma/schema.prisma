@@ -12,9 +12,9 @@ model User {
   id Int @id @default(autoincrement())
 
   fullName String
-  email    String   @unique
+  email    String    @unique
   password String
-  role     UserRole @default(USER)
+  role     UserRole  @default(USER)
   verified DateTime?
 
   provider   String?
@@ -149,6 +149,21 @@ model VerificationCode {
   createdAt DateTime @default(now())
 
   @@unique([userID, code])
+}
+
+model Story {
+  id              Int         @id @default(autoincrement())
+  previewImageUrl String
+  items           StoryItem[]
+  createdAt       DateTime    @default(now())
+}
+
+model StoryItem {
+  id        Int      @id @default(autoincrement())
+  storyID   Int
+  story     Story    @relation(fields: [storyID], references: [id])
+  sourceUrl String
+  createdAt DateTime @default(now())
 }
 
 enum OrderStatus {
