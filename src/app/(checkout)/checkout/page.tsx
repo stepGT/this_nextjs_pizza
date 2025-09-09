@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Title } from '@/components/shared';
 import { CheckoutSidebar } from '@/components/shared';
 import { useCart } from '@/hooks';
@@ -11,10 +11,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkoutFormSchema, CheckoutFormValues } from '@/constants';
 import { createOrder } from '@/app/actions';
 import toast from 'react-hot-toast';
+import { API } from '@/services/api-client';
+import { useSession } from 'next-auth/react';
 
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
+  const { data: session } = useSession();
+
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -26,6 +30,22 @@ export default function CheckoutPage() {
       comment: '',
     },
   });
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      const data = await API.auth.getMe();
+      const [firstName, lastName] = data.fullName.split(' ');
+
+      form.setValue('firstName', firstName);
+      form.setValue('lastName', lastName);
+      form.setValue('email', data.email);
+    }
+
+    if (session) {
+      fetchUserInfo();
+    }
+  }, [session]);
+
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
     updateItemQuantity(id, newQuantity);
